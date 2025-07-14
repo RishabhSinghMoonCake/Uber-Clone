@@ -1,4 +1,4 @@
-🚗 Uber Clone Backend (Learning Project)
+# 🚗 Uber Clone Backend (Learning Project)
 Learning how to build an Uber clone by following Sheriyan's Uber Clone Tutorial.
 
 This project is focused on building the backend of an Uber clone, using modern Node.js practices such as MVC architecture, middleware, token-based authentication, and MongoDB with Mongoose.
@@ -6,19 +6,19 @@ This project is focused on building the backend of an Uber clone, using modern N
 📁 Folder Structure
 
 UBER-CLONE/
-├── Backend/
-│   ├── app.js                 # Sets up Express app, middlewares, and routes
-│   ├── server.js              # Starts the HTTP server
-│   ├── db/
-│   │   └── db.js              # Connects to MongoDB
-│   ├── routes/
-│   │   └── user.routes.js     # User registration route with validations
-│   ├── controllers/
-│   │   └── user.controller.js # Handles business logic for user registration
-│   ├── services/
-│   │   └── user.service.js    # Service layer logic for creating users
-│   └── models/
-│       └── user.model.js      # Mongoose schema and user methods
+- ├── Backend/
+- │   ├── app.js                 # Sets up Express app, middlewares, and routes
+- │   ├── server.js              # Starts the HTTP server
+- │   ├── db/
+- │   │   └── db.js              # Connects to MongoDB
+- │   ├── routes/
+- │   │   └── user.routes.js     # User registration route with validations
+- │   ├── controllers/
+- │   │   └── user.controller.js # Handles business logic for user registration
+- │   ├── services/
+- │   │   └── user.service.js    # Service layer logic for creating users
+- │   └── models/
+- │       └── user.model.js      # Mongoose schema and user methods
 
 🚀 Tech Stack / Frameworks Used
 Tool	Purpose
