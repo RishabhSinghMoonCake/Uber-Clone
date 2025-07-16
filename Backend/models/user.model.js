@@ -36,8 +36,8 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 }
 
-userSchema.methods.comparePassword = async (password)=>{
-  return await bcrypt.compare(password, this.password)
+userSchema.methods.comparePassword = async (password, hashPassword)=>{
+  return await bcrypt.compare(password, hashPassword)
 }
 
 userSchema.statics.hashPassword = async (password)=>{
