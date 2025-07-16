@@ -157,3 +157,87 @@ curl -X POST http://localhost:5001/users/login \
     "password": "yourpassword"
   }'
 ```
+
+---
+
+# Get User Profile Endpoint
+
+## GET `/users/profile`
+
+Returns the authenticated user's profile information.
+
+### Authentication
+
+- Requires a valid JWT token in the `Authorization` header as a Bearer token or in the `token` cookie.
+
+### Responses
+
+- **200 OK**
+  - Description: Returns the user's profile.
+  - Example:
+    ```json
+    {
+      "_id": "60d0fe4f5311236168a109ca",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "john.doe@example.com",
+      "socketId": null
+    }
+    ```
+
+- **401 Unauthorized**
+  - Description: Missing or invalid authentication token.
+  - Example:
+    ```json
+    {
+      "message": "Not authorized, token failed"
+    }
+    ```
+
+### Example Request
+
+```sh
+curl -X GET http://localhost:5001/users/profile \
+  -H "Authorization: Bearer <your_jwt_token>"
+```
+
+---
+
+# User Logout Endpoint
+
+## GET `/users/logout`
+
+Logs out the authenticated user by blacklisting the current JWT token.
+
+### Authentication
+
+- Requires a valid JWT token in the `Authorization` header as a Bearer token or in the `token` cookie.
+
+### Responses
+
+- **200 OK**
+  - Description: User logged out successfully.
+  - Example:
+    ```json
+    {
+      "message": "Logged out Successfully"
+    }
+    ```
+
+- **401 Unauthorized**
+  - Description: Missing or invalid authentication token.
+  - Example:
+    ```json
+    {
+      "message": "Not authorized, token failed"
+    }
+    ```
+
+### Example Request
+
+```sh
+curl -X GET http://localhost:5001/users/logout \
+  -H "Authorization: Bearer <your_jwt_token>"
+```

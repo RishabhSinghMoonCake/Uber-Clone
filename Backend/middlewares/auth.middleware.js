@@ -1,13 +1,21 @@
 import userModel from "../models/user.model.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import blacklistTokenModel from "../models/blacklistToken.model.js";
 
 export default async function authUser(req,res,next)
 {
-  const token = req.cookies.token || req.headers.authorization.split(' ')[1]
+  const token = req.cookies.token || req.headers.authorization?.split(' ')[1]
   if(!token)
   {
-    return res.status(401).json({message:'You are not authorized'})
+    return res.status(401).json({message:'You are not authorized - no token found'})
+  }
+
+  const isBlacklisted = await blacklistTokenModel.findOne({ token });
+
+  if(isBlacklisted)
+  {
+    return res.status(401).json({message:'You are not Authorized - blacklisted'})
   }
 
   try{
@@ -18,6 +26,6 @@ export default async function authUser(req,res,next)
   }
   catch(err)
   {
-    return res.status(401).json({message:'You are not authorized'})
+    return res.status(401).json({message:'You are not authorized - error'})
   }
 }
