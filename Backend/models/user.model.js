@@ -41,7 +41,8 @@ userSchema.methods.comparePassword = async (password, hashPassword)=>{
 }
 
 userSchema.statics.hashPassword = async (password)=>{
-  return await bcrypt.hash(password, SALT)
+  const hashedPassword = await bcrypt.hash(password, SALT)
+  return hashedPassword
 }
 
 const userModel = mongoose.models.user || mongoose.model('user' , userSchema)
