@@ -34,4 +34,26 @@ async function registerCaptain(req, res) {
   }
 }
 
-export { registerCaptain };
+
+async function loginCaptain(req, res) {
+  const errors = validationResult(req); // Validate request body
+  if (!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array() });
+  }
+  const { email, password } = req.body;
+  
+  const isCaptainExists = await captainModel.findOne({ email });
+  if(!isCaptainExists) {
+    return res.status(400).json({ message: "Email is not registered" });
+  }
+
+  const isMatch = await isCaptainExists.comparePassword(password);
+  if (!isMatch) {
+    return res.status(400).json({ message: "Invalid password" });
+  }
+
+  const token = isCaptainExists.generateAuthToken(); // Generate auth token for the captain
+  res.status(200).json({ captain: isCaptainExists, token });
+}
+
+export { registerCaptain , loginCaptain}
