@@ -1,3 +1,4 @@
+import blacklistTokenModel from "../models/blacklistToken.model.js";
 import captainModel from "../models/captain.model.js";
 import createCaptain from "../services/captain.service.js";
 import { validationResult } from "express-validator";
@@ -41,7 +42,7 @@ async function loginCaptain(req, res) {
     return res.status(400).json({errors: errors.array() });
   }
   const { email, password } = req.body;
-  
+
   const isCaptainExists = await captainModel.findOne({ email });
   if(!isCaptainExists) {
     return res.status(400).json({ message: "Email is not registered" });
@@ -53,7 +54,25 @@ async function loginCaptain(req, res) {
   }
 
   const token = isCaptainExists.generateAuthToken(); // Generate auth token for the captain
+  res.cookie('token', token); // Set the token in a cookie
+  // res.header('Authorization', `Bearer ${token}`);
   res.status(200).json({ captain: isCaptainExists, token });
 }
 
-export { registerCaptain , loginCaptain}
+async function logoutCaptain(req, res) {
+  
+  const token = req.cookies.token || req.headers.authorization.split(' ')[1]; // Get the token from cookies
+  res.clearCookie('token'); // Clear the cookie
+  await blacklistTokenModel.create({
+    token // Store the token in blacklist
+  });
+
+  res.status(200).json({ message: "Logged out successfully" });
+}
+
+async function getCaptainProfile(req, res) {
+  const captain = req.captain; // Get the captain from the request object
+  res.status(200).json({ captain });
+}
+
+export { registerCaptain , loginCaptain , logoutCaptain, getCaptainProfile }

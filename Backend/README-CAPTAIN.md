@@ -161,3 +161,88 @@ curl -X POST http://localhost:PORT/captains/login \
 - If credentials are valid, you will receive a JWT token for authentication in future requests.
 - If credentials are invalid or missing, you will receive an error message indicating the problem.
 
+---
+
+## Captain Logout Endpoint
+
+### `GET /captains/logout`
+
+Logs out the captain by blacklisting the JWT token.
+
+#### Authentication
+
+- Requires a valid JWT token in the request cookie (`token`) or in the `Authorization` header as `Bearer <token>`.
+
+#### Response
+
+- **200 OK**
+  ```json
+  {
+    "message": "Logged out successfully"
+  }
+  ```
+- **401 Unauthorized**
+  ```json
+  {
+    "message": "You are not authorized - no token found"
+  }
+  ```
+  or
+  ```json
+  {
+    "message": "You are not Authorized - blacklisted"
+  }
+  ```
+
+#### Example Usage
+
+```bash
+curl -X GET http://localhost:PORT/captains/logout \
+  -H "Authorization: Bearer JWT_TOKEN"
+```
+
+---
+
+## Captain Profile Endpoint
+
+### `GET /captains/profile`
+
+Fetches the authenticated captain's profile information.
+
+#### Authentication
+
+- Requires a valid JWT token in the request cookie (`token`) or in the `Authorization` header as `Bearer <token>`.
+
+#### Response
+
+- **200 OK**
+  ```json
+  {
+    "captain": { ...captainData }
+  }
+  ```
+- **401 Unauthorized**
+  ```json
+  {
+    "message": "You are not authorized - no token found"
+  }
+  ```
+  or
+  ```json
+  {
+    "message": "You are not Authorized - blacklisted"
+  }
+  ```
+
+#### Example Usage
+
+```bash
+curl -X GET http://localhost:PORT/captains/profile \
+  -H "Authorization: Bearer JWT_TOKEN"
+```
+
+#### Explanation
+
+- Both endpoints require authentication via JWT.
+- `/logout` will invalidate the current token for future requests.
+- `/profile` returns the captain's details if
