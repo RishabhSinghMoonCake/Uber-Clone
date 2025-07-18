@@ -1,0 +1,5 @@
+.app{
+  width: min(100%, 450px);
+  margin-left: 50%;
+  transform: translateX(-50%);
+}

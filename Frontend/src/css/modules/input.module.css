@@ -1,0 +1,11 @@
+.inp{
+  padding: 15px 10px;
+  width: 90%;
+  margin: 10px 0;
+  background-color: rgb(224, 224, 224);
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-size: medium;
+  outline: none;
+}
