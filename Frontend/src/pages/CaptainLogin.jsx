@@ -2,8 +2,9 @@ import buttonClass from '../css/modules/button.module.css';
 import '../css/login.css';
 import {useNavigate} from 'react-router';
 import inputClass from '../css/modules/input.module.css';
-import { useState } from 'react';
-
+import { useState,useContext } from 'react';
+import { CaptainDataContext } from '../context/CaptainContext.jsx';
+import axios from 'axios';
 const CaptainLogin = () => {
 
   const navigate = useNavigate()
@@ -11,14 +12,33 @@ const CaptainLogin = () => {
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
 
-  const [captainData, setCaptainData] = useState({})
-  
-  const submitHandler = (e) =>{
+  const {captain,setCaptain,baseUrl} = useContext(CaptainDataContext)
+  const submitHandler = async (e) =>{
     e.preventDefault()
-    setCaptainData({
+    const user = {
       email,
       password:pass
-    })
+    }
+    try {
+      const response = await axios.post(baseUrl + '/captains/login', user)
+      if(response.status === 200) {
+        const data = response.data;
+        setCaptain(data.captain);
+        localStorage.setItem('token', data.token);
+        console.log("Captain logged in successfully:", data);
+        navigate('/home');
+      }
+      else if(response.status === 400)
+      {
+        console.error("Login failed with status:", response.errors);
+      }
+      else
+      {
+        console.error("Unexpected response status:", response.message);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
     setEmail('')
     setPass('')
   }

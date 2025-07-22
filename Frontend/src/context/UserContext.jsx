@@ -4,15 +4,17 @@ export const UserDataContext = createContext()
 
 const UserContext = ({children}) => {
 
+  const baseUrl = import.meta.env.VITE_BASE_URL
   const [user, setUser] = useState({
-    email:'',
-    fullname:{
-      firstname:'',
-      lastName:''
-    }
-  })
-
+      fullname:{
+        firstname:'',
+        lastname:'',
+      },      
+      email:'',
+      password:''
+    })
   const values = {
+    baseUrl,
     user,
     setUser
   }

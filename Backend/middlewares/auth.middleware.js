@@ -6,7 +6,7 @@ import blacklistTokenModel from "../models/blacklistToken.model.js";
 
 export default async function authUser(req,res,next)
 {
-  const token = req.cookies.token || req.headers.authorization?.split(' ')[1]
+  const token = req.headers.authorization?.split(' ')[1] || req.cookies.token;
   if(!token)
   {
     return res.status(401).json({message:'You are not authorized - no token found'})
@@ -22,6 +22,9 @@ export default async function authUser(req,res,next)
   try{
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     const user = await userModel.findById(decoded._id)
+    if (!user) {
+      return res.status(401).json({message:'You are not authorized - user not found'})
+    }
     req.user = user
     return next()
   }
@@ -32,7 +35,7 @@ export default async function authUser(req,res,next)
 }
 
 export async function authCaptain(req, res, next) {
-  const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
+  const token = req.headers.authorization?.split(' ')[1] || req.cookies.token;
   if (!token) {
     return res.status(401).json({ message: 'You are not authorized - no token found' });
   }
@@ -46,6 +49,9 @@ export async function authCaptain(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const captain = await captainModel.findById(decoded._id);
+    if (!captain) {
+      return res.status(401).json({ message: 'You are not authorized - captain not found' });
+    }
     req.captain = captain;
     return next();
   } catch (err) {

@@ -4,6 +4,7 @@ import {Link, useNavigate} from 'react-router';
 import inputClass from '../css/modules/input.module.css';
 import { useContext, useState } from 'react';
 import { UserDataContext } from '../context/userContext.jsx';
+import axios from 'axios'
 
 const UserSignup = () => {
   const navigate = useNavigate()
@@ -13,20 +14,36 @@ const UserSignup = () => {
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
 
-  const [userData, setuserData] = useState({})
+  const {baseUrl,user, setUser} = useContext(UserDataContext)
 
-  const {user, setUser} = useContext(UserDataContext)
-
-  const submitHandler = (e) =>{
+  const submitHandler = async (e) =>{
     e.preventDefault()
-    setuserData({
+    const newUser = {
       fullname:{
         firstname,
         lastname,
       },      
       email,
       password:pass
-    })
+    }
+    
+
+    try {
+      const response = await axios.post(`${baseUrl}/users/register`, newUser)
+
+      if(response.status === 201)
+      {
+        const data = response.data
+
+        setUser(data.user)
+        localStorage.setItem('token', data.token)
+        navigate('/home')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    
+
     setEmail('')
     setPass('')
     setFirstname('')
@@ -72,6 +89,10 @@ const UserSignup = () => {
 
 
         <button className={buttonClass.butt}>Sign Up as User</button>
+
+        <p>Already have an account? 
+          <span onClick={()=>navigate('/login')}>  Login</span>
+        </p>
 
         <button className={`captainButt ${buttonClass.butt}`}onClick={()=>navigate('/captain-signup')}>Sign Up as Captain</button>
         <p className='bottom-perm'>By proceeding, you agree to our Terms of Service and Privacy Policy and consent to the collection and use of your data in accordance with our Privacy Policy and to get calls and messages from Uber and its service providers.</p>

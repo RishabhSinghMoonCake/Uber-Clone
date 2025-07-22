@@ -9,7 +9,6 @@ router.post("/register", [
   body("fullname.lastname").notEmpty().withMessage("Lastname is required"),
   body("email").isEmail().withMessage("Invalid email"),
   body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
-  body("status").notEmpty().withMessage("Status is required"),
   body("vehicle.color").notEmpty().withMessage("Vehicle color is required"),
   body("vehicle.plate").notEmpty().withMessage("Vehicle plate is required"),
   body("vehicle.capacity").isNumeric().withMessage("Vehicle capacity must be a number"),

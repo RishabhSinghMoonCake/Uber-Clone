@@ -46,3 +46,13 @@
   gap: 10px;
   margin-right: 15px;
 }
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.vehicle-details {
+  margin-top: 1.5rem;
+}

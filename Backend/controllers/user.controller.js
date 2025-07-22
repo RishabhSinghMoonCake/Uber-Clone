@@ -27,6 +27,7 @@ async function registerUser(req,res)
   })
 
   const token = user.generateAuthToken()
+  res.cookie('token', token)
   res.status(201).json({token,user})
 }
 
