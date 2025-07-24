@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router'
 import './App.css'
-import Home from './pages/home.jsx'
+import Home from './pages/Home.jsx'
 import Start from './pages/Start.jsx'
 import UserLogin from './pages/UserLogin.jsx'
 import CaptainLogin from './pages/CaptainLogin.jsx'
