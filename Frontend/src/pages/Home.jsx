@@ -1,7 +1,9 @@
 import '../css/Home.css'
 import tmap from '../assets/tmap.jpg'
-import leftArrow from '../assets/left-arrow.png'
+
 import { useState } from 'react'
+import FloaterTripLocation from './components/FloaterTripLocation'
+import FloaterDriverOptions from './components/FloaterDriverOptions'
 
 const Home = () => {
   const [isPanelOpen,setIsPanelOpen] = useState(false);
@@ -32,24 +34,9 @@ const Home = () => {
       <div>
         <img className='tmap' src={tmap} alt="" />
       </div>
-      <div className='floater-container panel-close'  onClick={(e) => {e.stopPropagation(); if(!isPanelOpen)setPanelOpen(true)}}>
-        <div className='floater-inside'>
-          <div className='floater-header'>
-            <button onClick={(e) => {e.stopPropagation(); setPanelOpen(false)}} className="back-button">
-              <img src={leftArrow}/>
-            </button>
-            
-            <h2 className='floater-title'>Find a trip</h2>
-          </div>
-          <div className="link-inputs"></div>
-          <input type="text" placeholder='   Add a pick up location' />
-          <input type="text" placeholder='   Add a drop off location' />
-          <button className='floater-button'>Find your Captain</button>
-        </div>
-        <div className="floater-suggestions">
+      <FloaterTripLocation isPanelOpen={isPanelOpen} setPanelOpen={setPanelOpen} />
+      <FloaterDriverOptions isPanelOpen={isPanelOpen} setPanelOpen={setPanelOpen} />
 
-        </div>
-      </div>
     </div>
   )
 }
