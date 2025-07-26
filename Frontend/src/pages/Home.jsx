@@ -4,26 +4,15 @@ import tmap from '../assets/tmap.jpg'
 import { useState } from 'react'
 import FloaterTripLocation from './components/FloaterTripLocation'
 import FloaterDriverOptions from './components/FloaterDriverOptions'
+import FloaterConfirmRide from './components/FloaterConfirmRide'
+import FloaterWaitingForDriver from './components/FloaterWaitingForDriver'
+import FloatingRiderDetails from './components/FloatingRiderDetails'
 
-const Home = () => {
-  const [isPanelOpen,setIsPanelOpen] = useState(false);
-
-  function setPanelOpen(value) {
-    setIsPanelOpen(value);
-    const panel = document.querySelector('.floater-container');
-    const backButton = document.querySelector('.back-button');
-    // Remove both classes first
-    panel.classList.remove('panel-open', 'panel-close');
-    // Force reflow to restart animation
-    void panel.offsetWidth;
-    if (value) {
-      panel.classList.add('panel-open');
-      backButton.style.display = 'inline';
-    } else {
-      panel.classList.add('panel-close');
-      backButton.style.display = 'none';
-    }
-  }
+const Home = () => {  
+  const [tripLocData, setTripLocData] = useState(null)
+  const [rideDetails, setRideDetails] = useState(null)
+  const [waiting, setWaiting] = useState(false)
+  const [driverFound, setDriverFound] = useState(false)
 
   return (
     <div className="home-container">
@@ -34,8 +23,23 @@ const Home = () => {
       <div>
         <img className='tmap' src={tmap} alt="" />
       </div>
-      <FloaterTripLocation isPanelOpen={isPanelOpen} setPanelOpen={setPanelOpen} />
-      <FloaterDriverOptions isPanelOpen={isPanelOpen} setPanelOpen={setPanelOpen} />
+      {
+        driverFound ? (
+          <FloatingRiderDetails rideDetails={rideDetails} setRideDetails={setRideDetails}/>
+        ) : waiting ? (
+          <FloaterWaitingForDriver setWaiting={setWaiting} setDriverFound={setDriverFound}/>
+        ) : rideDetails ? (
+          <FloaterConfirmRide rideDetails={rideDetails} setRideDetails={setRideDetails} setWaiting={setWaiting}
+          />
+        ) : tripLocData ? (
+          <FloaterDriverOptions setRideDetails={setRideDetails} setTripLocData={setTripLocData} />
+        ) : (
+          <FloaterTripLocation setTripLocData={setTripLocData} />
+        )
+      }
+      
+      
+      
 
     </div>
   )

@@ -1,8 +1,8 @@
 import '../../css/Home.css';
 import leftArrow from '../../assets/left-arrow.png';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-const FloaterTripLocation = ({setTripLocData}) => {
+const FloaterWaitingForDriver = ({setWaiting,setDriverFound}) => {
   const floaterContainer = useRef(null);
   const backButton = useRef(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -21,18 +21,14 @@ const FloaterTripLocation = ({setTripLocData}) => {
     panel.classList.add(value ? 'panel-open' : 'panel-close');
     backBtn.style.display = value ? 'inline' : 'none';
   }
-
-  function submitHandler()
-  {
-    if(!pickUpLoc || !destLoc) return;
-    setTripLocData({
-      pickUpLoc,
-      destLoc
-    })
-  }
+  useEffect(()=>{
+    setDriverFound(true)
+    setWaiting(false)
+  },[])
+  
 
   return (
-    <div className="home-container">
+    <div className="home-container waiting">
       <div
         ref={floaterContainer}
         className='floater-container panel-close'
@@ -55,19 +51,14 @@ const FloaterTripLocation = ({setTripLocData}) => {
               <img src={leftArrow} alt="Back" />
             </button>
 
-            <h2 className='floater-title'>Find a trip</h2>
+            <h2 className='floater-title'>Waiting For Driver</h2>
           </div>
-
-          <div className="link-inputs"></div>
-          <input value={pickUpLoc} onChange={e=>setPickUpLoc(e.target.value)} type="text" placeholder='Add a pick up location' autoComplete="off" />
-          <input value={destLoc} onChange={e=>setDestLoc(e.target.value)} type="text" placeholder='Add a drop off location' autoComplete="off" />
-          <button onClick={()=>submitHandler()} className='floater-button'>Find your Captain</button>
+          <img style={{width:'300px',marginLeft:'50%', translate:'-50% 0'}} src="https://www.pngplay.com/wp-content/uploads/8/Uber-PNG-Photos.png" alt="" />
+          
         </div>
-
-        <div className="floater-suggestions" />
       </div>
     </div>
   );
 };
 
-export default FloaterTripLocation;
+export default FloaterWaitingForDriver;

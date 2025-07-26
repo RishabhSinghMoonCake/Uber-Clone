@@ -3,9 +3,6 @@
   margin: 10px;
 }
 
-.driver-options{
-  z-index: 10;
-}
 
 .home-container{
   position: relative;
@@ -19,7 +16,7 @@
 .floater-container{
   position: absolute;
   bottom: 0;
-  height: 400px;
+  min-height: 400px;
   width: 100%;
   background-color: white;
   color: black;
@@ -119,6 +116,74 @@
   width: 100%;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.294);
   border-radius: 20px;
+}
+
+.driver-options-container{
+  z-index: 10;
+}
+
+.driver-types{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.driver-types .driver-type-tag img{
+  width: 120px;
+}
+
+.driver-types .driver-type-tag{
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.driver-types .driver-type-tag:active{
+  outline: 2px solid black;
+
+}
+
+.driver-types .driver-type-tag .driver-type-info{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.driver-types .driver-type-tag .driver-type-info p{
+  margin: 0;
+}
+.driver-types .driver-type-tag .driver-type-info h2{
+  margin: 0;
+}
+.driver-types .driver-type-tag .driver-type-price{
+  font-weight: 500;
+  font-size:24px;
+}
+
+.confirm-ride{
+  z-index: 20;
+}
+
+.ride-details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.loc-details{
+  width: 100%;
+  display: flex;
+  gap: 40px;
+  justify-content: start;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.294);
+}
+.waiting{
+  z-index: 30;
 }
 
 @keyframes move-up {
